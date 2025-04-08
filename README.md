@@ -1,5 +1,5 @@
 
-# Website repository of "Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios"
+# Website Repository of "Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios"
 
 - The DrivingVQA dataset is available on [HuggingFace Hub](https://github.com/vita-epfl/helvipad/releases).
 - The code of RIV-CoT is available at [https://github.com/vita-epfl/RIV-CoT](https://github.com/vita-epfl/RIV-CoT).
