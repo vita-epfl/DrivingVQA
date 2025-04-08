@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Retrieval-Based Interleaved Visual Chain-of-Thought \\ in Real-World Driving Scenarios">
-  <meta name="keywords" content="Vision Language Models, Reasoning, Deep Learning">
+        content="Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios">
+  <meta name="keywords" content="vision-language models, reasoning, deep learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Retrieval-Based Interleaved Visual Chain-of-Thought \\ in Real-World Driving Scenarios</title>
+  <title>Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -42,29 +42,31 @@
           <!-- Authors -->
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://chcorbi.github.io/">Charles Corbière</a><sup>1</sup>,*</sup>
-            <span class="author-block">
-              <a href="www.linkedin.com/in/simon-roburin-a42869a6">Simon Roburin</a><sup>1,*</sup>,</span>
-            <span class="author-block">
-              <a href="https://smontariol.github.io/">Syielle Montariol</a><sup>1,*</sup>,
-            </span><br>
-            <span class="author-block">
-              <a href="https://atcbosselut.github.io/">Antoine Bosselut</a><sup>1</sup>,
+              <a href="https://chcorbi.github.io/">Charles Corbière</a><sup>*</sup>,
             </span>
             <span class="author-block">
-              <a href="https://people.epfl.ch/alexandre.alahi">Alexandre Alahi</a><sup>1</sup>.
+              <a href="www.linkedin.com/in/simon-roburin-a42869a6">Simon Roburin</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://smontariol.github.io/">Syrielle Montariol</a><sup>*</sup>,
+            </span><br>
+            <span class="author-block">
+              <a href="https://atcbosselut.github.io/">Antoine Bosselut</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://people.epfl.ch/alexandre.alahi">Alexandre Alahi</a>.
             </span>
           </div>
 
           <!-- Affiliations -->
           <div class="is-size-5 publication-authors" style="margin-top: 10px;">
-            <span class="author-block"><sup>1</sup>EPFL, Switzerland</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp  </span>
-            <span class="project-lead"><small><br><sup>*</sup>Equal contribution, with order determined alphabetically</small></span>
+            <span class="author-block">EPFL, Switzerland
+              <span class="project-lead"><small><br><sup>*</sup>Equal contribution, with order determined alphabetically</small></span>
           </div>
           <!-- Logo -->
-          <div style="margin-top: 20px;">
-              <img src="static/images/epfl.png" width="300px" alt="VITA EPFL Logo" />
-            </a>
+           <div style="display: flex; justify-content: center; align-items: center; column-gap: 40px; margin-top: 20px;">
+            <img src="static/images/vita-epfl.png" width="300px" alt="VITA logo" />
+            <img src="static/images/nlp-epfl.png" width="100px" alt="NLP Logo" />
           </div>
 
           <div class="column has-text-centered">
@@ -156,7 +158,7 @@
 
 <section class="section" id="dataset">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Dataset</h2>
+    <h2 class="title is-3"><span style="font-variant: small-caps;">DrivingVQA</span> Dataset</h2>
     <div class="content has-text-justified">
       <p>
         The <span style="font-variant: small-caps;">DrivingVQA</span> dataset contains 3,931 samples each featuring one or two visual questions with multiple answer choices, alongside expert-written explanations and human annotations of relevant entities with bounding box coordinates, divided into a training set (80%) and a test set (20%, 789 samples).
@@ -222,13 +224,24 @@
       </div>
 
       <p class="mt-5">
-        The data acquisition pipeline included:
+      <br><br>Use the link below to access the dataset on HuggingFace Hub.
+    </p>
+    <div class="has-text-centered">
+      <a href="https://huggingface.co/datasets/EPFL-DrivingVQA/DrivingVQA" target="_blank" class="button is-primary is-rounded is-large">
+        Download Dataset
+      </a>
+    </div>
+    <div style="margin-top: 30px;">
+      <p>
+        The dataset is organized into training, validation and testing subsets with the following structure:
       </p>
-      <ul style="list-style-type: disc; margin-left: 1.rem;"><br>
-        <li>collecting freely accessible driving theory problems from online platforms;</li>
-        <li>translating all questions, answers, options, and explanations from French to English using GPT-4o-mini;</li>
-        <li>automated extraction of relevant entities using GPT4o-mini and GroundingDINO followed by human expert refinement of the predicted bounding boxes.</li>
-      </ul>
+      <pre style="background: #f5f5f5; padding: 20px; border-radius: 5px; overflow: auto;">
+<code>DrivingVQA/
+├── train.json              # Train images, image size, questions, answers, explanation, bounding boxes
+├── test.json               # Test images, image size, questions, answers, explanation, bounding boxes
+├── dataset_infos.json      # Information about the dataset
+├── images/                 # Images used in the dataset
+</code></pre>
     </div>
   </div>
 </section>
@@ -273,67 +286,44 @@
       <p>
         We benchmark our method, <span style="font-variant: small-caps;">RIV-CoT</span>, against answering directly the answer (DirectAnswer) and using the chain-of-thought prompting (CoT) on both <span style="font-variant: small-caps;">DringVQA</span> and AOKVQA.
         Note that, annotations of relevant entities bounding boxes are not available on AOKVQA. Therefore, we generate pseduo annotations using GPT-4o-mini to detect potential relevant entities and GoundingDINO to localize these entities within the image.
-        We obtain the following exam scores for <span style="font-variant: small-caps;">DrivingVQA</span> and accuracy for AOKVQA with three different seeds:
+        We obtain the following exam scores for <span style="font-variant: small-caps;">DrivingVQA</span> and accuracy for AOKVQA with three different seeds:<br><br>
       </p>
-      <table class="table is-striped is-bordered is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>
-              <a href="https://huggingface.co/datasets/valeo/DrivingVQA" target="_blank"><span style="font-variant: small-caps;">DrivingVQA (Exam score)</span></a>
-            </th>
-            <th>
-              <a href="https://github.com/allenai/aokvqa" target="_blank">AOKVQA (Accuracy)</a>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>DirectAnswer</td>
-            <td class="has-text-centered">53.0 (±0.9)</td>
-            <td class="has-text-centered">78.2 (±0.3)</td>
-          </tr>
-          <tr>
-            <td>CoT</td>
-            <td class="has-text-centered">56.2 (±1.0)</td>
-            <td class="has-text-centered">80.6 (±0.4)</td>
-          </tr>
-          <tr>
-            <td><strong><span style="font-variant: small-caps;">RIV-CoT</span></strong></td>
-            <td class="has-text-centered"><strong>59.3 (±1.0) </strong></td>
-            <td class="has-text-centered"><strong>84.2 (±0.2</strong></td>
-          </tr>
-        </tbody>
-      </table>
+<table class="table is-bordered is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th scope="col">Method</th>
+      <th scope="col" class="has-text-centered">
+        <a href="https://huggingface.co/datasets/valeo/DrivingVQA" target="_blank" title="DrivingVQA on Hugging Face">
+          <span style="font-variant: small-caps;">DrivingVQA</span><br>
+        </a><small>(Exam score)</small>
+      </th>
+      <th scope="col" class="has-text-centered">
+        <a href="https://github.com/allenai/aokvqa" target="_blank" title="AOKVQA GitHub Repo">
+          AOKVQA<br>
+        </a><small>(Accuracy)</small>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DirectAnswer</td>
+      <td class="has-text-centered">53.0 <span style="font-size: 0.85em;">(±0.9)</span></td>
+      <td class="has-text-centered">78.2 <span style="font-size: 0.85em;">(±0.3)</span></td>
+    </tr>
+    <tr>
+      <td>CoT</td>
+      <td class="has-text-centered">56.2 <span style="font-size: 0.85em;">(±1.0)</span></td>
+      <td class="has-text-centered">80.6 <span style="font-size: 0.85em;">(±0.4)</span></td>
+    </tr>
+    <tr style="background-color: #fdf5f5;">
+      <td><strong><span style="font-variant: small-caps;">RIV-CoT</span></strong></td>
+      <td class="has-text-centered"><strong>59.3 <span style="font-size: 0.85em;">(±1.0)</span></strong></td>
+      <td class="has-text-centered"><strong>84.2 <span style="font-size: 0.85em;">(±0.2)</span></strong></td>
+    </tr>
+  </tbody>
+</table>
     </div>
   </div>
-</section>
-
-
-
-<section class="section" id="dataset-structure">
-  <div class="container is-max-desktop content">
-    <h2 class="title is-3">Download</h2>
-    <p>
-      Use the link below to access the dataset on HuggingFace Hub.
-    </p>
-    <div class="has-text-centered">
-      <a href="https://huggingface.co/datasets/EPFL-DrivingVQA/DrivingVQA" target="_blank" class="button is-primary is-rounded is-large">
-        Download Dataset
-      </a>
-    </div>
-    <div style="margin-top: 30px;">
-      <p>
-        The dataset is organized into training, validation and testing subsets with the following structure:
-      </p>
-      <pre style="background: #f5f5f5; padding: 20px; border-radius: 5px; overflow: auto;">
-<code>
-DrivingVQA/
-├── train.json              # Train images, image size, questions, answers, explanation, bounding boxes
-├── test.json               # Test images, image size, questions, answers, explanation, bounding boxes
-├── dataset_infos.json      # Information about the dataset
-├── images/                 # Images used in the dataset
-</code>
 </section>
 
 
@@ -343,12 +333,13 @@ DrivingVQA/
     <p>
       If you use the <span style="font-variant: small-caps;">DrivingVQA</span> dataset in your research, please cite it using the following BibTeX entry:
     </p>
-    <pre><code>@article{corbiere2025drivingvqa,
-  title={DRIVINGVQA: Analyzing Visual Chain-of-Thought Reasoning of Vision Language Models in Real-World Scenarios with Driving Theory Tests},
-  author={Corbi{\`e}re, Charles and Roburin, Simon and Montariol, Syrielle and Bosselut, Antoine and Alahi, Alexandre},
-  journal={arXiv preprint arXiv:2501.04671},
-  year={2025}
-}
+    <pre><code>@misc{drivingvqa2025,
+      title         = {Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios},
+      author        = {Corbi{\`e}re, Charles and Roburin, Simon and Montariol, Syrielle and Bosselut, Antoine and Alahi, Alexandre},
+      year          = {2025},
+      eprint        = {2501.04671},
+      archivePrefix = {arXiv},
+      primaryClass  = {cs.CV},
 }</code></pre>
   </div>
 </section>
