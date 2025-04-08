@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Retrieval-Based Interleaved Visual Chain-of-Thought \\ in Real-World Driving Scenarios">
+  <meta name="keywords" content="Vision Language Models, Reasoning, Deep Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retrieval-Based Interleaved Visual Chain-of-Thought \\ in Real-World Driving Scenarios</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <!-- Title -->
+          <!-- Title -->
+          <h1 class="title is-1 publication-title">
+            Retrieval-Based Interleaved Visual Chain-of-Thought in Real-World Driving Scenarios
+          </h1>
+
+          <!-- Authors -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://chcorbi.github.io/">Charles Corbière</a><sup>1</sup>,*</sup>
+            <span class="author-block">
+              <a href="www.linkedin.com/in/simon-roburin-a42869a6">Simon Roburin</a><sup>1,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://smontariol.github.io/">Syielle Montariol</a><sup>1,*</sup>,
+            </span><br>
+            <span class="author-block">
+              <a href="https://atcbosselut.github.io/">Antoine Bosselut</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://people.epfl.ch/alexandre.alahi">Alexandre Alahi</a><sup>1</sup>.
+            </span>
+          </div>
+
+          <!-- Affiliations -->
+          <div class="is-size-5 publication-authors" style="margin-top: 10px;">
+            <span class="author-block"><sup>1</sup>EPFL, Switzerland</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp</a>&nbsp  </span>
+            <span class="project-lead"><small><br><sup>*</sup>Equal contribution, with order determined alphabetically</small></span>
+          </div>
+          <!-- Logo -->
+          <div style="margin-top: 20px;">
+              <img src="static/images/epfl.png" width="300px" alt="VITA EPFL Logo" />
+            </a>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Abstract Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2501.04671"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2501.04671" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/vita-epfl/RIV-CoT"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/EPFL-DrivingVQA/DrivingVQA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <img src="https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo-pirate.svg"
+                           alt="Hugging Face Logo"
+                           style="width: 20px; height: 20px; vertical-align: middle;">
+                  </span>
+                  <span>Dataset</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" height="100%">
+        <img src="./static/images/motivation_figure.png" alt="Helvipad Teaser Image" style="height: 500px; width: auto;">
+    </div>
+      </img>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            While chain-of-thought (CoT) prompting improves reasoning in large language models, its effectiveness in vision-language models (VLMs) remains limited due to over-reliance on textual cues and memorized knowledge.
+          </p>
+          <p>
+            To investigate the visual reasoning capabilities of VLMs in complex real-world scenarios, we introduce <span style="font-variant: small-caps;">DrivingVQA</span>, a visual question answering dataset derived from driving theory exams, which contains 3,931 multiple-choice problems with expert-written explanations and grounded entities relevant to the reasoning process.
+            Leveraging this dataset, we propose <span style="font-variant: small-caps;">RIV-CoT</span>, a Retrieval-Based Interleaved Visual Chain-of-Thought method that enables VLMs to reason using visual crops corresponding to these relevant entities.
+          </p>
+          <p>
+           Our experiments demonstrate that <span style="font-variant: small-caps;">RIV-CoT</span> improves answer accuracy by 3.1% and reasoning accuracy by 4.6% over vanilla CoT prompting.
+            Furthermore, we demonstrate that our method effectively scales to the larger A-OKVQA reasoning dataset by leveraging automatically generated pseudo-labels, outperforming CoT prompting.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Dataset Statistics Section -->
+
+<section class="section" id="dataset">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Dataset</h2>
+    <div class="content has-text-justified">
+      <p>
+        The <span style="font-variant: small-caps;">DrivingVQA</span> dataset contains 3,931 samples each featuring one or two visual questions with multiple answer choices, alongside expert-written explanations and human annotations of relevant entities with bounding box coordinates, divided into a training set (80%) and a test set (20%, 789 samples).
+        The following provides an overview of the dataset:
+      </p>
+
+      <div class="spaced has-text-centered my-5">
+        <img src="static/images/dataset_example.png" alt="DrivingVQA Example" style="height: 450px; width: auto;">
+      </div>
+
+      <p class="mt-5">
+        We also provide a set of statistics to illustrate the dataset's diversity and complexity:
+      </p>
+
+      <div class="container">
+        <!-- Row 1 -->
+        <div class="columns">
+          <div class="column">
+            <figure>
+              <img src="static/images/number_of_possible_answers.png" alt="Number of possible answers" style="height: 200px; width: auto;">
+              <figcaption>Number of possible answers</figcaption>
+            </figure>
+          </div>
+          <div class="column">
+            <figure>
+              <img src="static/images/number_of_true_answers.png" alt="Number of true answers" style="height: 200px; width: auto;">
+              <figcaption>Number of correct answers</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="columns">
+          <div class="column">
+            <figure>
+              <img src="static/images/words_per_explanation_distribution.png" alt="Words per explanation distribution" style="height: 200px; width: auto;">
+              <figcaption>Words per explanation distribution</figcaption>
+            </figure>
+          </div>
+          <div class="column">
+            <figure>
+              <img src="static/images/image_coverage.png" alt="Image coverage" style="height: 200px; width: auto;">
+              <figcaption>Image coverage by entities</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="columns">
+          <div class="column">
+            <figure>
+              <img src="static/images/number_of_relevant_entities.png" alt="Number of relevant entities" style="height: 200px; width: auto;">
+              <figcaption>Number of relevant entities</figcaption>
+            </figure>
+          </div>
+          <div class="column">
+            <figure>
+              <img src="static/images/top_k_frequent_entities.png" alt="Top k frequent entities" style="height: 200px; width: auto;">
+              <figcaption>Top-10 most frequent entities</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-5">
+        The data acquisition pipeline included:
+      </p>
+      <ul style="list-style-type: disc; margin-left: 1.rem;"><br>
+        <li>collecting freely accessible driving theory problems from online platforms;</li>
+        <li>translating all questions, answers, options, and explanations from French to English using GPT-4o-mini;</li>
+        <li>automated extraction of relevant entities using GPT4o-mini and GroundingDINO followed by human expert refinement of the predicted bounding boxes.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RiV-CoT Section -->
+<section class="section" id="rivcot">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">RIV-CoT</h2>
+    <div class="content has-text-justified">
+      <p>
+        <span style="font-variant: small-caps;">RIV-CoT</span> is a framework designed to enhance the visual reasoning abilities of VLMs by explicitly grounding their chain-of-thought process in visual evidence.
+        <span style="font-variant: small-caps;">RIV-CoT</span> relies on two distinct modules: (1) the data augmentation of human-annotated explanations by interleaving them with relevant entities, and (2) a multi-step retrieval-based generation during inference to dynamically insert image crops containing relevant entities detected by the VLM into its generated chain-of-thought.
+        The first modules is illustrated in the following figure:
+      </p>
+
+      <div class="spaced has-text-centered my-5">
+        <img src="static/images/interleaved_example.png" alt="Interleaved-example" style="height: 400px; width: auto;">
+      </div>
+
+      <p class="has-text-justified mt-5">
+        The multi-step retrieval based generation at inference starts with a tokenized question and an image tokenized by the adapter on the output of the Vision Encoder. The Large Language Model generates output until it predicts a bounding box.
+        At this point, the generation process pauses to extract the corresponding image crop based on the predicted coordinates. The image crop is encoded and adapted into an image crop token, which is then added back into the model’s context along with the question, image tokens, and previously generated outputs.
+        This iterative process continues until the model produces its final answer. We illustrate this process in the following illustration:
+      </p>
+
+      <div class="spaced has-text-centered my-5">
+        <img src="static/images/figure_model_3.png" alt="multi-step-retrieval" style="height: 350px; width: auto;">
+      </div>
+    </div>
+  </div>
+</section>
+
+</section>
+
+<!-- Benchmark Section -->
+</section>
+<!-- Benchmark Section -->
+<section class="section" id="benchmark-results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Benchmark Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        We benchmark our method, <span style="font-variant: small-caps;">RIV-CoT</span>, against answering directly the answer (DirectAnswer) and using the chain-of-thought prompting (CoT) on both <span style="font-variant: small-caps;">DringVQA</span> and AOKVQA.
+        Note that, annotations of relevant entities bounding boxes are not available on AOKVQA. Therefore, we generate pseduo annotations using GPT-4o-mini to detect potential relevant entities and GoundingDINO to localize these entities within the image.
+        We obtain the following exam scores for <span style="font-variant: small-caps;">DrivingVQA</span> and accuracy for AOKVQA with three different seeds:
+      </p>
+      <table class="table is-striped is-bordered is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>
+              <a href="https://huggingface.co/datasets/valeo/DrivingVQA" target="_blank"><span style="font-variant: small-caps;">DrivingVQA (Exam score)</span></a>
+            </th>
+            <th>
+              <a href="https://github.com/allenai/aokvqa" target="_blank">AOKVQA</a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DirectAnswer</td>
+            <td class="has-text-centered">53.0 (±0.9)</td>
+            <td class="has-text-centered">78.2 (±0.3)</td>
+          </tr>
+          <tr>
+            <td>CoT</td>
+            <td class="has-text-centered">56.2 (±1.0)</td>
+            <td class="has-text-centered">80.6 (±0.4)</td>
+          </tr>
+          <tr>
+            <td><strong><span style="font-variant: small-caps;">RIV-CoT</span></strong></td>
+            <td class="has-text-centered"><strong>59.3 (±1.0) </strong></td>
+            <td class="has-text-centered"><strong>84.2 (±0.2</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section" id="dataset-structure">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Download</h2>
+    <p>
+      Use the link below to access the dataset on HuggingFace Hub.
+    </p>
+    <div class="has-text-centered">
+      <a href="https://huggingface.co/datasets/EPFL-DrivingVQA/DrivingVQA" target="_blank" class="button is-primary is-rounded is-large">
+        Download Dataset
+      </a>
+    </div>
+    <div style="margin-top: 30px;">
+      <p>
+        The dataset is organized into training, validation and testing subsets with the following structure:
+      </p>
+      <pre style="background: #f5f5f5; padding: 20px; border-radius: 5px; overflow: auto;">
+<code>
+DrivingVQA/
+├── train.json              # Train images, image size, questions, answers, explanation, bounding boxes
+├── test.json               # Test images, image size, questions, answers, explanation, bounding boxes
+├── dataset_infos.json      # Information about the dataset
+├── images/                 # Images used in the dataset
+</code>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <p>
+      If you use the <span style="font-variant: small-caps;">DrivingVQA</span> dataset in your research, please cite it using the following BibTeX entry:
+    </p>
+    <pre><code>@article{corbiere2025drivingvqa,
+  title={DRIVINGVQA: Analyzing Visual Chain-of-Thought Reasoning of Vision Language Models in Real-World Scenarios with Driving Theory Tests},
+  author={Corbi{\`e}re, Charles and Roburin, Simon and Montariol, Syrielle and Bosselut, Antoine and Alahi, Alexandre},
+  journal={arXiv preprint arXiv:2501.04671},
+  year={2025}
+}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This page was built using the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+            which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
